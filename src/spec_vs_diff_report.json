@@ -1,0 +1,116 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T11:39:21.833Z",
+  "summary": "Core frontend pages/routes and a booking form were added, plus a Motoko backend actor with appointment methods and an admin appointments page using Internet Identity. However, several requirements are only partially implemented: the backend appointment schema/API does not match the requested fields/behavior (no returned id, missing timestamps/status semantics, missing structured fields like location/time/phone/notes), persistence is not evidenced, and admin authorization is not clearly implemented as an allowlist of admin principals. Generated image files’ existence under the required public path is not evidenced (only referenced).",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Submitting the booking form stores an appointment request in the backend and returns a confirmation (e.g., a booking reference or success message).",
+      "reason": "The backend update method `requestAppointment` returns `async ()` (no identifier/reference), and the success page shows a generic message without any returned booking reference.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/BookingSuccessPage.tsx",
+        "frontend/src/components/AppointmentForm.tsx"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Appointment request persistence across refresh (persistent canister state).",
+      "reason": "The backend stores data in `let` maps and a `var` counter without any `stable` storage shown; the diff does not evidence stable persistence across upgrades/restarts.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Backend appointment data model stores at least: id, createdAt timestamp, customer details, selected service/issue, preferred date/time, preferred branch, notes, and a status field (e.g., \"New\").",
+      "reason": "The `Appointment` type only includes `customerName`, `deviceType`, `issueDescription`, `preferredDate`, and `status`. There is no `createdAt`, no separate preferred time/branch/notes fields, and the id is only used as a map key internally and not part of the stored record.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Backend exposes an update method to create an appointment request and returns an identifier.",
+      "reason": "`requestAppointment(...) : async ()` does not return an identifier; although `generateAppointmentId()` exists, it is not returned to the caller.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "List-appointments admin authorization uses a backend-configured allowlist of admin principals.",
+      "reason": "Authorization is delegated to `AccessControl.isAdmin(...)` and an initialization call `_initializeAccessControlWithSecret(adminToken)` from a URL parameter; the diff does not show a backend-configured allowlist of admin principals as requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Generated static brand assets are present under frontend/public/assets/generated and used in the UI.",
+      "reason": "The UI references the required asset paths, but the diff summary does not show the actual image files added under `frontend/public/assets/generated` (one added file was omitted due to limits, but its path/content is not evidenced).",
+      "evidence": [
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile management APIs (getCallerUserProfile/getUserProfile/saveCallerUserProfile) with user permissions.",
+      "reason": "BuildRequest does not mention user profiles or profile storage; only appointments booking and admin listing were requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "End-user endpoint to list \"my appointments\" (getMyAppointments).",
+      "reason": "BuildRequest only requests an admin-only listing API/page; it does not ask for a user-facing \"my appointments\" API.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Admin access control initialization via secret token read from URL parameter `caffeineAdminToken` and calling `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest specifies an allowlist of admin principals for authorization; it does not request a secret-token based bootstrap mechanism via URL params.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Footer attribution/link to caffeine.ai (\"Built with ❤️ using caffeine.ai\").",
+      "reason": "BuildRequest does not request vendor attribution or outbound links in the footer.",
+      "evidence": [
+        "frontend/src/components/SiteFooter.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppointmentForm.tsx",
+    "frontend/src/components/SiteFooter.tsx",
+    "frontend/src/components/SiteHeader.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/BookAppointmentPage.tsx",
+    "frontend/src/pages/BookingSuccessPage.tsx",
+    "frontend/src/pages/LandingPage.tsx",
+    "frontend/src/pages/admin/AdminAppointmentsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "kind": "build_request",
+  "title": "Doctor Phone Repair website with service info and online appointment booking",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a public, responsive website for the mobile repair shop named \"Doctor Phone Repair\" with clear sections for Services & Pricing, Locations, and Contact details using the exact information provided (prices in Rs, two addresses, two phone numbers, and Gmail).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build me website for my mobile repair shop name doctor Phone repair\n\nKeypoints\n1. Screen replacement cost starts from Rs 800\n2. Battery replacement cost starts from Rs 650\n3.  Water damage repair cost starts from Rs 300\n4. Dead phone repair starts from Rs 800\n\nLocation - \n1. Main Office - 2nd floor TDA COMPLEX Tinsukia Assam \n2. Sub branch - Rupai siding Tinsukia Assam\n\nContact - \n1. +919706499653\n2. +917086219818\n\nGmail - drphonetdatsk@gmail.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing page shows business name \"Doctor Phone Repair\" prominently.",
+        "Services list includes: Screen replacement (starts from Rs 800), Battery replacement (starts from Rs 650), Water damage repair (starts from Rs 300), Dead phone repair (starts from Rs 800).",
+        "Locations section includes both: \"Main Office - 2nd floor TDA COMPLEX Tinsukia Assam\" and \"Sub branch - Rupai siding Tinsukia Assam\".",
+        "Contact section includes clickable phone links for both numbers and a clickable mailto link for drphonetdatsk@gmail.com.",
+        "Layout is mobile-first and remains usable on small screens without horizontal scrolling."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add an online appointment booking flow where visitors can submit a repair appointment request via a form, see a success confirmation, and have the request persisted in the backend canister.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Both"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Website includes a visible \"Book Appointment\" call-to-action leading to a booking form.",
+        "Booking form collects at minimum: customer name, phone number, preferred location (Main Office/Sub branch), device model (free text), issue type (at least the four listed services plus \"Other\"), preferred date, preferred time, and optional notes.",
+        "Submitting the form stores an appointment request in the backend and returns a confirmation (e.g., a booking reference or success message).",
+        "User-facing validation messages are in English and prevent submitting clearly incomplete/invalid required fields.",
+        "After refresh, previously submitted appointments remain stored (persistent canister state)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement backend appointment data model and APIs to create appointments and to list appointments for authorized shop admins only (using a backend-configured allowlist of admin principals).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Both"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes an update method to create an appointment request and returns an identifier.",
+        "Backend stores appointments with at least: id, createdAt timestamp, customer details, selected service/issue, preferred date/time, preferred branch, notes, and a status field (e.g., \"New\").",
+        "Backend exposes a query method to list appointments that only succeeds for allowlisted admin principals and rejects others.",
+        "Unauthorized callers cannot list appointments (returns an error)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add an admin-only appointments page in the frontend that lets authorized users sign in with Internet Identity and view the list of submitted appointments (read-only is sufficient).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Both"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There is an admin route/page (e.g., \"Admin\" / \"Appointments\") that prompts for Internet Identity sign-in when not authenticated.",
+        "When signed in as an authorized admin principal, the page displays a table/list of appointments including key fields (created date, name, phone, location, issue, preferred date/time, notes, status).",
+        "When signed in as a non-admin principal, the page shows a clear English error state (e.g., \"You are not authorized to view appointments\").",
+        "No edits are made to files under the immutable paths listed in SYSTEM_CONTEXT; the implementation composes existing hooks/components instead."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Apply a cohesive visual theme (colors, typography, spacing, and component styling) appropriate for a phone repair business and use it consistently across all pages and sections (avoid a blue/purple default palette).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2",
+          "msg-5"
+        ],
+        "quotes": [
+          "Build me website for my mobile repair shop name doctor Phone repair",
+          "Both"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across header/hero, sections, buttons, and forms.",
+        "Color palette is not dominated by blue/purple unless explicitly needed; use a distinct alternative (e.g., charcoal + mint/green accent, or black + amber).",
+        "Booking form and contact areas have clear visual hierarchy and readable contrast."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add generated static brand assets (logo and hero illustration) to the frontend and render them on the site (store under frontend/public/assets/generated and reference them directly from the frontend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build me website for my mobile repair shop name doctor Phone repair"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are present under frontend/public/assets/generated and used in the UI (e.g., logo in header, hero image in hero section).",
+        "Images are loaded as static assets from the frontend (not served via backend).",
+        "Alt text is present and in English."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in the main actor).",
+    "Do not modify any frontend files under the immutable paths listed in SYSTEM_CONTEXT; compose them instead.",
+    "Use English for all user-facing text.",
+    "Do not add external databases or third-party auth providers; use canister storage and Internet Identity only."
+  ],
+  "nonGoals": [
+    "Online payments or pricing checkout.",
+    "SMS/WhatsApp notifications or email delivery integrations.",
+    "Live map embeds or geolocation features.",
+    "Real-time updates via WebSockets."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal repair-themed logo mark with text \"Doctor Phone Repair\" (doctor-phone-repair-logo.dim_512x512.png)",
+      "Wide hero illustration showing a smartphone repair workspace (tools, phone, clean modern style) (doctor-phone-repair-hero.dim_1600x900.png)"
+    ],
+    "edits": []
+  }
+}

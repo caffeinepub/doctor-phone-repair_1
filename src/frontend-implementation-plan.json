@@ -1,0 +1,172 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Doctor Phone Repair marketing site with appointment booking and admin appointments viewer",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a public, responsive landing page with Services & Pricing, Locations, and Contact using the provided business information.",
+      "acceptanceCriteria": [
+        "Landing page shows business name \"Doctor Phone Repair\" prominently.",
+        "Services list includes: Screen replacement (starts from Rs 800), Battery replacement (starts from Rs 650), Water damage repair (starts from Rs 300), Dead phone repair (starts from Rs 800).",
+        "Locations section includes both: \"Main Office - 2nd floor TDA COMPLEX Tinsukia Assam\" and \"Sub branch - Rupai siding Tinsukia Assam\".",
+        "Contact section includes clickable phone links for both numbers and a clickable mailto link for drphonetdatsk@gmail.com.",
+        "Layout is mobile-first and remains usable on small screens without horizontal scrolling."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "create",
+          "description": "Create the public landing page layout with sections: Hero (business name), Services & Pricing (with the exact Rs prices), Locations (two addresses), and Contact (tel links for +919706499653 and +917086219818, plus mailto for drphonetdatsk@gmail.com). Use shadcn-ui components (e.g., Card/Button) for consistent section styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/SiteHeader.tsx",
+          "operation": "create",
+          "description": "Create a responsive header with logo/brand name and navigation links (Services, Locations, Contact) and a prominent \"Book Appointment\" call-to-action. Use shadcn-ui components (e.g., Button) for the CTA; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/SiteFooter.tsx",
+          "operation": "create",
+          "description": "Create a footer that repeats key contact information (phones + Gmail) and location text for usability on mobile. Use shadcn-ui primitives (e.g., Separator/Typography patterns) where helpful; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Add app-level composition that renders the Landing page and wires navigation to the landing sections and booking flow entry. Use a standard React routing approach (e.g., react-router) if already available in the template; otherwise keep navigation as in-page anchors plus a route to the booking page."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement an online appointment booking flow with a form, success confirmation, and backend persistence via existing backend calls.",
+      "acceptanceCriteria": [
+        "Website includes a visible \"Book Appointment\" call-to-action leading to a booking form.",
+        "Booking form collects at minimum: customer name, phone number, preferred location (Main Office/Sub branch), device model (free text), issue type (at least the four listed services plus \"Other\"), preferred date, preferred time, and optional notes.",
+        "Submitting the form stores an appointment request in the backend and returns a confirmation (e.g., a booking reference or success message).",
+        "User-facing validation messages are in English and prevent submitting clearly incomplete/invalid required fields.",
+        "After refresh, previously submitted appointments remain stored (persistent canister state)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AppointmentForm.tsx",
+          "operation": "create",
+          "description": "Create the booking form UI and validation (English messages) for: customer name, phone number, preferred location, device model, issue type (four services + Other), preferred date, preferred time, and optional notes. Use shadcn-ui Form/Input/Select/Textarea components for accessible styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/BookAppointmentPage.tsx",
+          "operation": "create",
+          "description": "Create the booking page that hosts AppointmentForm and explains what happens after submission. Ensure the page is reachable from the header CTA and is mobile-first."
+        },
+        {
+          "path": "frontend/src/pages/BookingSuccessPage.tsx",
+          "operation": "create",
+          "description": "Create a success confirmation view shown after a successful submission (e.g., \"Appointment request submitted successfully\" + summary). Ensure it is wired as part of the booking flow and provides a way back to the landing page."
+        },
+        {
+          "path": "frontend/src/hooks/useRequestAppointment.ts",
+          "operation": "create",
+          "description": "Create a React Query mutation hook that calls the backend capability to persist an appointment request (using useActor). Because the current backend interface accepts fewer fields, serialize the additional form fields (phone, location, issue type, preferred time, notes) into the provided parameters in a consistent, readable format while still satisfying UI requirements."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire routes/navigation for the booking flow: route to the booking form page and route to the booking success confirmation page (no orphan views)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add an admin-only appointments page that uses Internet Identity sign-in and shows a read-only list for authorized admins, with a clear unauthorized state.",
+      "acceptanceCriteria": [
+        "There is an admin route/page (e.g., \"Admin\" / \"Appointments\") that prompts for Internet Identity sign-in when not authenticated.",
+        "When signed in as an authorized admin principal, the page displays a table/list of appointments including key fields (created date, name, phone, location, issue, preferred date/time, notes, status).",
+        "When signed in as a non-admin principal, the page shows a clear English error state (e.g., \"You are not authorized to view appointments\").",
+        "No edits are made to files under the immutable paths listed in SYSTEM_CONTEXT; the implementation composes existing hooks/components instead."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/AdminAppointmentsPage.tsx",
+          "operation": "create",
+          "description": "Create an admin appointments page that (1) prompts Internet Identity sign-in when unauthenticated (using the existing authorization component pattern via useInternetIdentity), (2) fetches appointments for admins, and (3) renders a read-only table/list with created date, name, phone, location, issue, preferred date/time, notes, and status. Use shadcn-ui Table/Card/Alert components for presentation and error states; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AdminRouteGuard.tsx",
+          "operation": "create",
+          "description": "Create a small guard/wrapper component for admin routes that checks authentication state and shows a sign-in prompt when needed, and shows an English unauthorized state when the backend denies access. Use the selected authorization component approach (Internet Identity via useInternetIdentity/useActor) to support this; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminAppointments.ts",
+          "operation": "create",
+          "description": "Create a React Query hook that calls the backend capability for admin appointment listing (using useActor). Ensure authorization failures are caught and surfaced as a clear English UI error (e.g., not authorized)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register and wire an admin route (e.g., /admin/appointments) to AdminRouteGuard + AdminAppointmentsPage. Add a discreet navigation entry (e.g., in footer or header) without exposing any appointment data publicly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Apply a cohesive, non-blue/purple-dominant visual theme consistently across pages, sections, buttons, and forms.",
+      "acceptanceCriteria": [
+        "Theme is consistent across header/hero, sections, buttons, and forms.",
+        "Color palette is not dominated by blue/purple unless explicitly needed; use a distinct alternative (e.g., charcoal + mint/green accent, or black + amber).",
+        "Booking form and contact areas have clear visual hierarchy and readable contrast."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global styles and CSS variables used by Tailwind/shadcn-ui theming (e.g., background/foreground/primary/etc.) with a cohesive phone-repair-appropriate palette (e.g., charcoal + mint/green accent, avoiding blue/purple dominance). Verify shadcn-ui theming guidance before implementing."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust theme tokens (if needed) to align with the chosen non-blue/purple palette and ensure consistent typography/spacing. Keep styling centralized and consistent with shadcn-ui/Tailwind patterns; verify the component library's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Apply the shared theme styling to header navigation and primary CTA button states to ensure consistent look and clear hierarchy. Use shadcn-ui Button variants consistently; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AppointmentForm.tsx",
+          "operation": "modify",
+          "description": "Ensure the form uses consistent spacing, readable contrast, and clear validation styling aligned with the global theme. Use shadcn-ui form-related components to standardize styling; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add and render generated static brand assets (logo and hero illustration) from frontend/public/assets/generated with English alt text.",
+      "acceptanceCriteria": [
+        "Generated images are present under frontend/public/assets/generated and used in the UI (e.g., logo in header, hero image in hero section).",
+        "Images are loaded as static assets from the frontend (not served via backend).",
+        "Alt text is present and in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/doctor-phone-repair-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset at the exact path frontend/public/assets/generated/doctor-phone-repair-logo.dim_512x512.png for direct static usage in the UI."
+        },
+        {
+          "path": "frontend/public/assets/generated/doctor-phone-repair-hero.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated hero illustration asset at the exact path frontend/public/assets/generated/doctor-phone-repair-hero.dim_1600x900.png for direct static usage in the UI."
+        },
+        {
+          "path": "frontend/src/components/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Render the static logo from frontend/public/assets/generated/doctor-phone-repair-logo.dim_512x512.png in the header with English alt text. Verify the framework/static asset usage conventions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "modify",
+          "description": "Render the hero illustration from frontend/public/assets/generated/doctor-phone-repair-hero.dim_1600x900.png in the hero section with English alt text, ensuring responsive sizing without horizontal overflow."
+        }
+      ]
+    }
+  ]
+}

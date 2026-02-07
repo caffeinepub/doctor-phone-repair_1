@@ -1,0 +1,23 @@
+{
+  "backend/main.mo": "Motoko canister handling user profiles and appointment storage with access control and admin-only retrieval of all appointments.",
+  "feature_evidence.json": "Report mapping implemented features to related frontend files, components, and test requirements with confidence levels.",
+  "frontend-file-summaries.txt": "Prewritten summaries describing the purpose of each major frontend file including pages, components, and hooks.",
+  "frontend/index.css": "Root Tailwind base layer defining theme tokens and dark-mode variants for a custom OKLCH color system.",
+  "frontend/index.html": "Basic HTML shell providing the root mount point and loading the Vite React entry script.",
+  "frontend/src/App.tsx": "Sets up TanStack Router routes for public pages, booking flow, and admin appointments under a shared layout.",
+  "frontend/src/components/AppointmentForm.tsx": "Client-side validated booking form that serializes inputs and submits appointment requests to the backend.",
+  "frontend/src/components/SiteFooter.tsx": "Footer showing business contact info, locations, quick links, and a caffeine.ai attribution.",
+  "frontend/src/components/SiteHeader.tsx": "Responsive site header with logo, navigation links, smooth scrolling, and mobile menu toggle.",
+  "frontend/src/hooks/useActor.ts": "Creates and manages a backend actor tied to Internet Identity, refreshing dependent queries on identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides Internet Identity authentication context, handling login, stored identity loading, and state management.",
+  "frontend/src/hooks/useQueries.ts": "Defines React Query hooks to request appointments and fetch all appointments using the backend actor.",
+  "frontend/src/index.css": "Tailwind base styles plus custom light and dark theme variables for the app's color system.",
+  "frontend/src/main.tsx": "App entry point that initializes React, React Query, and Internet Identity provider.",
+  "frontend/src/pages/admin/AdminAppointmentsPage.tsx": "Admin dashboard page that handles Internet Identity login and displays or restricts access to appointment data based on auth state.",
+  "frontend/src/pages/BookAppointmentPage.tsx": "Page displaying a form to book an appointment along with steps explaining the follow‑up process.",
+  "frontend/src/pages/BookingSuccessPage.tsx": "Success page confirming an appointment request with next steps and navigation buttons.",
+  "frontend/src/pages/LandingPage.tsx": "Landing page with hero content, service listings, pricing, and navigation to booking or service details.",
+  "frontend/src/utils/urlParams.ts": "Utility functions for reading, storing, persisting, and clearing URL and session-based parameters, including hash routing support.",
+  "frontend/tailwind.config.js": "Tailwind CSS configuration defining theme extensions, colors, fonts, animations, and plugin setup for the frontend.",
+  "project_state.json": "Project state metadata describing features, requirements, and assets for the Doctor Phone Repair website and admin functionality."
+}

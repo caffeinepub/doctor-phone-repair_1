@@ -1,0 +1,13 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color system using charcoal + teal/mint theme for phone repair shop aesthetic, avoiding blue/purple defaults.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom color tokens, Inter font family, and extended design system for consistent theming.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup for landing, booking, success, and admin routes with shared layout.",
+  "frontend/src/components/SiteHeader.tsx": "Responsive header with logo, navigation menu, and prominent \"Book Appointment\" CTA button with mobile menu support.",
+  "frontend/src/components/SiteFooter.tsx": "Footer component displaying contact information, locations, quick links, and caffeine.ai attribution.",
+  "frontend/src/pages/LandingPage.tsx": "Public landing page with hero section, services/pricing cards, locations, and contact information using provided business details.",
+  "frontend/src/pages/BookAppointmentPage.tsx": "Appointment booking page hosting the appointment form with explanatory content about the booking process.",
+  "frontend/src/pages/BookingSuccessPage.tsx": "Success confirmation page shown after appointment submission with next steps and navigation options.",
+  "frontend/src/components/AppointmentForm.tsx": "Comprehensive appointment booking form with validation collecting customer details, device info, issue type, location, date/time, and notes.",
+  "frontend/src/pages/admin/AdminAppointmentsPage.tsx": "Admin dashboard with Internet Identity authentication showing appointments table with parsed customer and appointment details.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for appointment operations including requestAppointment mutation and getAllAppointments query."
+}

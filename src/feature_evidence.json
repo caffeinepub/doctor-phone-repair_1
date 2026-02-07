@@ -1,0 +1,111 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-public-responsive-website-for-the-mobile-repair-shop-named-doctor-phone-repair-with-clear-sections-for-services-pricing-locations-and-contact-details-using-the-exact-information-provided-prices-in-rs-two-addresses-two-phone-numbers-and-gmail",
+      "featureTitle": "Create a public, responsive website for the mobile repair shop named \"Doctor Phone Repair\" with clear sections for Services & Pricing, Locations, and Contact details using the exact information provided (prices in Rs, two addresses, two phone numbers, and Gmail).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/SiteFooter.tsx",
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-online-appointment-booking-flow-where-visitors-can-submit-a-repair-appointment-request-via-a-form-see-a-success-confirmation-and-have-the-request-persisted-in-the-backend-canister",
+      "featureTitle": "Add an online appointment booking flow where visitors can submit a repair appointment request via a form, see a success confirmation, and have the request persisted in the backend canister.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppointmentForm.tsx",
+        "frontend/src/pages/BookAppointmentPage.tsx",
+        "frontend/src/pages/BookingSuccessPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-admin-only-appointments-page-in-the-frontend-that-lets-authorized-users-sign-in-with-internet-identity-and-view-the-list-of-submitted-appointments-read-only-is-sufficient",
+      "featureTitle": "Add an admin-only appointments page in the frontend that lets authorized users sign in with Internet Identity and view the list of submitted appointments (read-only is sufficient).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/admin/AdminAppointmentsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-cohesive-visual-theme-colors-typography-spacing-and-component-styling-appropriate-for-a-phone-repair-business-and-use-it-consistently-across-all-pages-and-sections-avoid-a-blue-purple-default-palette",
+      "featureTitle": "Apply a cohesive visual theme (colors, typography, spacing, and component styling) appropriate for a phone repair business and use it consistently across all pages and sections (avoid a blue/purple default palette).",
+      "files": [
+        "frontend/src/components/AppointmentForm.tsx",
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-brand-assets-logo-and-hero-illustration-to-the-frontend-and-render-them-on-the-site-store-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
+      "featureTitle": "Add generated static brand assets (logo and hero illustration) to the frontend and render them on the site (store under frontend/public/assets/generated and reference them directly from the frontend).",
+      "files": [
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

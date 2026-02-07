@@ -1,2 +1,3 @@
-# doctor-phone-repair_1
-Exported from Caffeine project: Doctor Phone Repair
+## Doctor Phone Repair
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
